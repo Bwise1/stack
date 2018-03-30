@@ -98,3 +98,12 @@ void printStack(struct stack *ps)
             push(ps,x);
      }
 }
+
+void copyStack (struct stack *a, struct stack *b){
+	int x;
+     struct stack temp;
+     initializeStack(&temp);
+     
+     x=pop(&a);
+     temp
+}
