@@ -1,0 +1,119 @@
+#include <iostream>
+using namespace std;
+
+#define QUEUESIZE 50
+
+struct queue{
+	int items[QUEUESIZE];
+	int  front,rear;
+	};
+
+void initQueue(struct queue *pq)
+{
+		pq->front = pq->rear = QUEUESIZE - 1;
+}
+
+int  isQueueEmpty(struct queue *pq)
+{
+		if(pq->front == pq->rear)
+			return 1; //queue is empty
+		else
+			return 0; //queue is not empty
+}
+
+int  isQueueFull(struct queue *pq)
+{
+		if(pq->front == pq->rear)
+			return 1; //queue is empty
+		else
+			return 0; //queue is not empty
+}
+
+void insert(struct queue *pq, int x)
+{
+//make a room for new element
+if(pq->rear == QUEUESIZE-1)
+	pq->rear=0;
+else
+	(pq->rear)++;
+if(pq->rear == pq->front)
+	{
+		cout<<"Overflow: Queue is full"<<endl;
+//exit(1);
+}
+else
+{
+	pq->items[pq->rear]=x;
+}
+}
+
+
+int remove(struct queue *pq)
+{
+	if(isQueueEmpty(pq) == 1)
+	{
+		cout<<"Underflow: Queue is empty"<<endl;
+		//exit(1);
+	}
+else
+{
+	if(pq->front == QUEUESIZE -1)
+		pq->front=0;
+	else
+		(pq->front)++;
+		return pq->items [(pq->front)];
+}
+}
+
+void copyQueue(struct queue *source, struct queue *destination){
+	int x;
+	struct queue temp;
+	initQueue(&temp);
+	
+	while(!isQueueEmpty(source)){
+		x=remove(source);
+		insert(&temp,x);
+	}
+	
+		while(!isQueueEmpty(&temp)){
+		x=remove(&temp);
+		insert(source,x);
+		insert(destination,x);
+	}
+}
+
+void printQueue(struct queue *ps){
+	int x;
+	struct queue temp;
+	initQueue(&temp);
+	
+		while(!isQueueEmpty(ps)){
+		x=remove(ps);
+		insert(&temp,x);
+		cout<<x;
+	}
+	
+		while(!isQueueEmpty(&temp)){
+		x=remove(&temp);
+		insert(ps,x);
+	}
+	
+}
+
+
+int main(){
+	struct queue a;
+	initQueue(&a);
+	struct queue b;
+	initQueue(&b);
+	insert(&a,5);
+	insert(&a,10);
+	cout<<"Elements of a & b b4 copy\n";
+	printQueue(&a);
+	printQueue(&b);
+	copyQueue(&a,&b);
+	cout<<"\nElements of a & b after copy\n";
+	printQueue(&a);
+	printQueue(&b);
+	
+}
