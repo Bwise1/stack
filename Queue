@@ -117,3 +117,84 @@ int main(){
 	printQueue(&b);
 	
 }
+
+
+/*  Linked List*/
+
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+struct node{
+	int data;
+struct node *next;
+};
+
+struct node *createNode(struct node* header, int data){
+	struct node *temp;
+	temp = (struct node *) malloc(sizeof(node));
+	temp->data = data;
+	temp->next = NULL;
+	
+	return temp;
+}
+
+struct node *insertFront(struct node *header, int data){
+	struct node *temp = createNode(header, data);
+	temp->next = header;
+	header = temp;
+	return temp;
+}
+
+int is_empty (struct node *header){
+	if(header == NULL){
+		return 1;
+	} else
+		return 0;
+}
+
+struct node *insertBack(struct node *header, int data){
+	struct node * temp, *headertemp;
+	temp = createNode(header, data);
+	
+	if(header == NULL){
+		header = temp;
+		return header;
+	}
+	
+	headertemp=header;
+	
+	while(headertemp->next != NULL){
+		headertemp = headertemp->next;
+	}
+	headertemp->next=temp;
+	return header;
+}
+
+//void insertAfter(struct node *afterNode, int d)
+//{
+//	struct node *temp;
+//	temp=newnode(d);
+//		temp->next=afterNode->next;
+//		afterNode->next=temp;
+//}
+
+
+
+int main(){
+	
+	struct node *header = NULL;
+	header=createNode(header,52);
+	header=insertBack(header,48);
+	header=insertBack(header,36);
+	header=insertFront(header,12);
+	
+
+
+cout<<header->data<<"--->";
+cout<<header->next->data<<"--->";
+cout<<header->next->next->data<<"--->";
+cout<<header->next->next->next->data<<endl;
+	
+	return 0;
+}
