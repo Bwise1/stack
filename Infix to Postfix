@@ -1,11 +1,11 @@
 #include <iostream>
 #include <string>
 using namespace std;
-#define STACKSIZE 10
+#define STAcKSIZE 10
 struct stack
 {
   int top;
-  char items[STACKSIZE];
+  char items[STAcKSIZE];
 };
 
 void initMyStack(struct stack *);
@@ -15,7 +15,7 @@ int stack_Is_Empty(struct stack *);
 char pop(struct stack *);
 bool IsOperand(char);
 bool IsOperator(char);
-int prcd(char, char);
+int precedding(char, char);
 
 
 int main(void)
@@ -36,7 +36,7 @@ int main(void)
 			
 		
 		else{
-			while(!stack_Is_Empty(&s)&& prcd(s.top,symb)){
+			while(!stack_Is_Empty(&s)&& precedding(s.top,symb)){
 			topSymb=pop(&s);
 			postfix+=topSymb;
 		}
@@ -66,7 +66,7 @@ void initMyStack(struct stack *ps)
 
 int stack_Is_Full(struct stack *ps)
 {
-   if(ps->top == STACKSIZE-1) 
+   if(ps->top == STAcKSIZE-1) 
      return 1; 
    else 
      return 0; 
@@ -120,14 +120,14 @@ bool IsOperator(char c){
 
 
 
-int prcd(char op1, char op2){
+int precedding(char first, char second){
 
-if((op1=='+'&& op2=='+')|| (op1=='-'&& op2=='-') ||(op1=='*'&& op2=='*') || (op1=='/'&& op2=='/') || (op1=='/'&& op2=='+') || (op1=='/'&& op2=='-') ||
-   (op1=='+'&& op2=='-')|| (op1=='-'&& op2=='+') ||(op1=='*'&& op2=='+') || (op1=='*'&& op2=='/') || (op1=='*'&& op2=='-') || (op1=='/'&& op2=='*'))
+if((first=='+'&& second=='+')|| (first=='-'&& second=='-') ||(first=='*'&& second=='*') || (first=='/'&& second=='/') || (first=='/'&& second=='+') || (first=='/'&& second=='-') ||
+   (first=='+'&& second=='-')|| (first=='-'&& second=='+') ||(first=='*'&& second=='+') || (first=='*'&& second=='/') || (first=='*'&& second=='-') || (first=='/'&& second=='*'))
 	return true;
 
-if((op1=='+'&& op2=='*')|| (op1=='+'&& op2=='/') ||(op1=='-'&& op2=='*') || (op1=='-'&& op2=='/') || (op1=='('&& op2=='+') || (op1=='('&& op2=='*') || 
-	(op1==','&& op2==',') || (op1=='+'&& op2=='(')|| (op1=='-'&& op2=='(') ||(op1=='*'&& op2=='(') || (op1=='/'&& op2=='(') || (op1=='+'&& op2==',') || 
-	(op1=='-'&& op2==',') || (op1=='*'&& op2==','))
+if((first=='+'&& second=='*')|| (first=='+'&& second=='/') ||(first=='-'&& second=='*') || (first=='-'&& second=='/') || (first=='('&& second=='+') || (first=='('&& second=='*') || 
+	(first==','&& second==',') || (first=='+'&& second=='(')|| (first=='-'&& second=='(') ||(first=='*'&& second=='(') || (first=='/'&& second=='(') || (first=='+'&& second==',') || 
+	(first=='-'&& second==',') || (first=='*'&& second==','))
 	return false;	
 }
