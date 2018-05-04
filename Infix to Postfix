@@ -1,0 +1,133 @@
+#include <iostream>
+#include <string>
+using namespace std;
+#define STACKSIZE 10
+struct stack
+{
+  int top;
+  char items[STACKSIZE];
+};
+
+void initMyStack(struct stack *);
+int stack_Is_Full(struct stack *);
+void push(struct stack *, char);
+int stack_Is_Empty(struct stack *);
+char pop(struct stack *);
+bool IsOperand(char);
+bool IsOperator(char);
+int prcd(char, char);
+
+
+int main(void)
+{
+	
+	string equation,postfix;
+	char symb;
+	struct stack s;
+	initMyStack(&s);
+	char topSymb;
+	cout<<"pleaase Enter your desired Equation: ";
+	cin>>equation;
+	for (int i=0; i<equation.length(); i++){
+//		push(&s,equation[i]);
+		symb=equation[i];
+		if (IsOperand(symb))
+			postfix+=symb;
+			
+		
+		else{
+			while(!stack_Is_Empty(&s)&& prcd(s.top,symb)){
+			topSymb=pop(&s);
+			postfix+=topSymb;
+		}
+		
+		if(stack_Is_Empty(&s)||symb!=')')
+			push(&s,symb);
+			
+		else
+			topSymb=pop(&s);
+		}
+	}//end for loop
+	while(!stack_Is_Empty(&s)){
+		topSymb=pop(&s);
+		postfix+=topSymb;
+	}
+
+	
+	cout<<postfix;
+    system("PAUSE");
+    return 0; 
+	
+	
+}
+
+void initMyStack(struct stack *ps)
+{  ps->top = - 1; }
+
+int stack_Is_Full(struct stack *ps)
+{
+   if(ps->top == STACKSIZE-1) 
+     return 1; 
+   else 
+     return 0; 
+}
+
+void push(struct stack *ps, char x)
+{
+   if(stack_Is_Full(ps))		
+   {
+     cout<<"Overflow: Stack is full\n";
+     exit(1);
+   }
+   ps->top++;
+   ps->items[ps->top]=x;
+}
+
+
+
+int stack_Is_Empty(struct stack *ps)
+{
+   if(ps->top == -1)
+     return 1; 
+   else
+     return 0; 
+}
+
+char pop(struct stack *ps)
+{
+	if(stack_Is_Empty(ps)==1)	
+	{
+		cout<<"Underflow: Stack is empty\n";
+		exit(1);
+	}
+	return ps->items[(ps->top)--];
+}
+
+
+
+bool IsOperand(char c){
+	if(c>='0' && c<='9') return true;
+	if(c>='a' && c<='z') return true;
+	if(c>='A' && c<='Z') return true;
+	return false;
+}
+
+bool IsOperator(char c){
+	if(c=='+' || c=='-' || c=='*' || c=='/' )
+		return true;
+	return false;
+}
+
+
+
+int prcd(char op1, char op2){
+
+if((op1=='+'&& op2=='+')|| (op1=='-'&& op2=='-') ||(op1=='*'&& op2=='*') || (op1=='/'&& op2=='/') || (op1=='/'&& op2=='+') || (op1=='/'&& op2=='-') ||
+   (op1=='+'&& op2=='-')|| (op1=='-'&& op2=='+') ||(op1=='*'&& op2=='+') || (op1=='*'&& op2=='/') || (op1=='*'&& op2=='-') || (op1=='/'&& op2=='*'))
+	return true;
+
+if((op1=='+'&& op2=='*')|| (op1=='+'&& op2=='/') ||(op1=='-'&& op2=='*') || (op1=='-'&& op2=='/') || (op1=='('&& op2=='+') || (op1=='('&& op2=='*') || 
+	(op1==','&& op2==',') || (op1=='+'&& op2=='(')|| (op1=='-'&& op2=='(') ||(op1=='*'&& op2=='(') || (op1=='/'&& op2=='(') || (op1=='+'&& op2==',') || 
+	(op1=='-'&& op2==',') || (op1=='*'&& op2==','))
+	return false;	
+}
