@@ -1,11 +1,11 @@
 #include <iostream>
 #include <string>
 using namespace std;
-#define STAcKSIZE 10
+#define STACKSIZE 10
 struct stack
 {
   int top;
-  char items[STAcKSIZE];
+  char items[STACKSIZE];
 };
 
 void initMyStack(struct stack *);
@@ -15,7 +15,7 @@ int stack_Is_Empty(struct stack *);
 char pop(struct stack *);
 bool IsOperand(char);
 bool IsOperator(char);
-int precedding(char, char);
+int preceding(char, char);
 
 
 int main(void)
@@ -29,17 +29,20 @@ int main(void)
 	cout<<"pleaase Enter your desired Equation: ";
 	cin>>equation;
 	for (int i=0; i<equation.length(); i++){
-//		push(&s,equation[i]);
+
 		symb=equation[i];
 		if (IsOperand(symb))
 			postfix+=symb;
 			
+			
 		
 		else{
-			while(!stack_Is_Empty(&s)&& precedding(s.top,symb)){
+			cout<<s.top<<endl;
+			while(!stack_Is_Empty(&s)&& preceding(s.items[s.top],symb)){
 			topSymb=pop(&s);
 			postfix+=topSymb;
 		}
+		
 		
 		if(stack_Is_Empty(&s)||symb!=')')
 			push(&s,symb);
@@ -66,7 +69,7 @@ void initMyStack(struct stack *ps)
 
 int stack_Is_Full(struct stack *ps)
 {
-   if(ps->top == STAcKSIZE-1) 
+   if(ps->top == STACKSIZE-1) 
      return 1; 
    else 
      return 0; 
@@ -106,28 +109,52 @@ char pop(struct stack *ps)
 
 
 bool IsOperand(char c){
-	if(c>='0' && c<='9') return true;
-	if(c>='a' && c<='z') return true;
-	if(c>='A' && c<='Z') return true;
+	if(c>='0' && c<='9') {
+		return true;}
+	if(c>='a' && c<='z') {
+		return true;}
+	if(c>='A' && c<='Z') {
+		return true;}
 	return false;
 }
 
 bool IsOperator(char c){
-	if(c=='+' || c=='-' || c=='*' || c=='/' )
-		return true;
+	if(c=='+' || c=='-' || c=='*' || c=='/' ){
+		return true;}
 	return false;
 }
 
 
 
-int precedding(char first, char second){
+int preceding(char first, char second){
 
-if((first=='+'&& second=='+')|| (first=='-'&& second=='-') ||(first=='*'&& second=='*') || (first=='/'&& second=='/') || (first=='/'&& second=='+') || (first=='/'&& second=='-') ||
-   (first=='+'&& second=='-')|| (first=='-'&& second=='+') ||(first=='*'&& second=='+') || (first=='*'&& second=='/') || (first=='*'&& second=='-') || (first=='/'&& second=='*'))
+if(	(first=='+'&& second=='+')|| 
+	(first=='-'&& second=='-') ||
+	(first=='*'&& second=='*') || 
+	(first=='/'&& second=='/') || 
+	(first=='/'&& second=='+') || 
+	(first=='/'&& second=='-') ||
+   	(first=='+'&& second=='-')|| 
+   	(first=='-'&& second=='+') ||
+  	(first=='*'&& second=='+') || 
+   	(first=='*'&& second=='/') || 
+   	(first=='*'&& second=='-') || 
+	(first=='/'&& second=='*'))
 	return true;
 
-if((first=='+'&& second=='*')|| (first=='+'&& second=='/') ||(first=='-'&& second=='*') || (first=='-'&& second=='/') || (first=='('&& second=='+') || (first=='('&& second=='*') || 
-	(first==','&& second==',') || (first=='+'&& second=='(')|| (first=='-'&& second=='(') ||(first=='*'&& second=='(') || (first=='/'&& second=='(') || (first=='+'&& second==',') || 
-	(first=='-'&& second==',') || (first=='*'&& second==','))
+if((first=='+' && second=='*')|| 
+	(first=='+' && second=='/') ||
+	(first=='-' && second=='*') || 
+	(first=='-' && second=='/')	||
+	(first=='(' && second=='+') || 
+	(first=='('&& second=='*') || 
+	(first==','&& second==',') || 
+	(first=='+'&& second=='(') || 
+	(first=='-'&& second=='(') ||
+	(first=='*'&& second=='(') || 
+	(first=='/'&& second=='(') || 
+	(first=='+'&& second==',') || 
+	(first=='-'&& second==',') || 
+	(first=='*'&& second==','))
 	return false;	
 }
