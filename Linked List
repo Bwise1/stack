@@ -1,0 +1,107 @@
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+struct node {
+	int data;
+	struct node *next;
+};
+
+struct node *createNode( int x ){
+
+	struct node *temp = (struct node*)malloc (sizeof(struct node));
+	temp -> data = x;
+	///header = temp;
+	//header->next=header;
+	temp->next=NULL;
+	return temp;
+}
+
+struct node *addFront(struct node *header, int x){
+	struct node *temp =createNode(x);
+	
+	if (header == NULL){
+		temp->next = header;
+		header = temp;
+		return header;
+	}
+	
+	temp->next = header;
+	header = temp;
+		
+	/*temp -> data = x;
+	temp -> next = header->next;
+		header -> next = temp;*/
+		
+	return header;			
+}
+
+struct node *addEnd (struct node *header, int data){
+	if (header == NULL)
+		return createNode(data);
+	temp -> data = data;
+	temp -> next = header -> next;
+	header -> next = temp;
+	header = temp;
+	
+	return header;
+}
+
+void display(struct node *header){
+	struct node *temp;
+	if(header==NULL){
+		cout<<"You have an Empty Linked List. "<<endl;
+	
+	}
+	
+	temp=header;
+	
+	while( temp != NULL ){
+		cout << temp->data << " --> ";
+		temp = temp->next;
+	}
+	
+	cout << endl << endl;
+
+	/*do {
+		cout<<temp->data<<"-->";
+		temp=temp->next;
+	}
+	while (temp !=header->next);*/
+}
+	
+
+struct node *deleteFront(struct node *header){
+	struct node *temp;
+	temp=header;
+	header=header->next;
+	
+	free(temp);
+return header;
+}
+
+
+int main(){
+	struct node *header = NULL;
+	
+	header = addFront(header,54);
+	display( header );
+	
+	header = addFront(header,10);
+	display( header );
+	
+	header = addFront(header,19);
+	display( header );
+	
+	header=deleteFront(header);
+	display( header );
+	/*header = addFront(header, 67);
+	header= addFront(header, 45);
+	header = addEnd(header,90);
+	
+	//deleteFront(header);
+	display(header);*/
+
+	
+	
+}
