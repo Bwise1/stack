@@ -1,0 +1,105 @@
+#include <iostream>
+#include<cstdlib>
+using namespace std;
+
+struct  node {
+	int data;
+	struct node * left;
+	struct node * right;
+};
+
+struct node *newNode(int d){
+	
+		struct node *temp;
+	temp=(struct node *) malloc(sizeof(node));
+	temp->data=d;
+	temp->left=NULL;
+	temp->right=NULL;
+
+	return temp;
+}
+
+struct node *insertLeft(struct node *tree, struct node *p){
+	if(tree==NULL){
+		return p;
+	}
+	tree->left=insertLeft(tree->left, p); //recursive function call
+}
+
+struct node *insertRight(struct node *tree, struct node *p){
+	if(tree==NULL){
+		return p;
+	}
+	tree->right=insertRight(tree->right, p);//recursive function call
+}
+
+
+
+
+void postorderTraverse(struct node * tree)
+{
+	if(tree==NULL)
+		return;
+	postorderTraverse(tree->left);
+	postorderTraverse(tree->right);
+	cout<<tree->data<<" ";
+}
+
+
+
+void inorderTraverse(struct node *tree)
+{
+	if(tree==NULL)
+		return;
+	inorderTraverse(tree->left);
+	cout<<tree->data<<" ";
+	inorderTraverse(tree->right);
+}
+
+
+void preorderTraverse(struct node * tree)
+{
+	if(tree==NULL)
+		return;
+	cout<<tree->data<<" ";
+	preorderTraverse(tree->left);
+	preorderTraverse(tree->right);
+}
+
+
+int main(){
+	struct node *tree = NULL;
+	tree= newNode(8);
+	
+	struct node *temp=NULL;
+	
+	temp=newNode(10);
+	tree->left=insertLeft(tree->left, temp);
+	
+	temp=newNode(20);
+	tree->left=insertLeft(tree->left, temp);
+	
+	temp=newNode(15);
+	tree->right=insertRight(tree->right, temp);
+	
+	temp=newNode(16);
+	tree->right=insertRight(tree->right, temp);
+	
+	
+	
+	cout<<"data is "<<tree->data<<endl;
+	cout<<"left data is "<<tree->left->data<<endl;
+	cout<<"right is "<<tree->right->data<<endl;
+	
+	//LRRoot
+	cout<<"\nPostorder Traverse: ";
+	postorderTraverse(tree);
+	
+	cout<<"\nIn order Traverse: ";
+	inorderTraverse(tree);
+	
+	cout<<"\nPre order Traverse: ";
+	preorderTraverse(tree);
+	
+	return 0;
+}
